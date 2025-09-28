@@ -1,58 +1,92 @@
+/* Google Fontsから古風なフォントを読み込む */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&display=swap');
+
 /* ページ全体のスタイル */
 body {
-    background-color: #f0f0f0; /* 少しグレーの背景 */
-    font-family: sans-serif;
+    background-color: #3a3022; /* 背景を暗めの茶色に */
+    background-image: url("https://www.transparenttextures.com/patterns/old-wall.png"); /* 古い壁のテクスチャを追加 */
+    font-family: 'EB Garamond', serif; /* 読み込んだ古風なフォントを指定 */
+    color: #4a3d2b; /* 文字の色を濃い茶色に */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
+    padding: 20px;
 }
 
-/* コンテンツを囲むボックス */
+/* コンテンツを囲むボックス（古文書本体） */
 .container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    background-color: #f5eeda; /* 羊皮紙の色 */
+    padding: 40px 50px;
+    border: 2px solid #c8bca9;
+    border-radius: 5px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(0,0,0,0.2); /* リアルな影を追加 */
     text-align: center;
     width: 90%;
-    max-width: 500px;
+    max-width: 600px;
+}
+
+h1 {
+    font-size: 2.5em;
+    font-weight: normal;
+    border-bottom: 2px solid #c8bca9; /* 下線を追加 */
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 /* 問題文のスタイル */
 .question {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-bottom: 20px;
+    font-size: 1.4em;
+    line-height: 1.8;
+    margin-bottom: 30px;
 }
 
 /* 入力欄のスタイル */
 #answerInput {
     width: 80%;
-    padding: 10px;
-    font-size: 1em;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 12px;
+    font-size: 1.1em;
+    font-family: 'EB Garamond', serif; /* 入力欄にもフォントを適用 */
+    border: none;
+    border-bottom: 2px solid #a3957d; /* 下線のみのデザインに */
+    background-color: transparent; /* 背景を透過 */
+    text-align: center;
+    color: #4a3d2b;
+}
+#answerInput:focus {
+    outline: none; /* クリックしたときの青い枠線を消す */
+    border-bottom-color: #4a3d2b;
 }
 
-/* ボタンのスタイル */
+/* ボタン（封蝋風）のスタイル */
 button {
-    padding: 10px 20px;
-    font-size: 1em;
-    background-color: #005CAF; /* 中央大学のスクールカラーっぽい色 */
-    color: white;
-    border: none;
-    border-radius: 5px;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-family: 'EB Garamond', serif;
+    background-color: #8a0303; /* 封蝋の赤色 */
+    color: #f5eeda;
+    border: 2px solid #6b0202;
+    border-radius: 50px; /* 角を丸くして円に近づける */
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 20px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    transition: all 0.2s ease; /* アニメーションを追加 */
 }
 button:hover {
-    background-color: #004a8d; /* マウスを乗せた時の色 */
+    background-color: #6b0202;
+    transform: translateY(-2px); /* 少し浮き上がる動き */
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
 }
 
 /* 結果表示部分のスタイル */
 #result {
-    margin-top: 20px;
+    margin-top: 25px;
+    font-size: 1.2em;
     font-weight: bold;
+}
+#result a {
+    color: #8a0303; /* リンクの色をボタンと合わせる */
+    text-decoration: none;
+    border-bottom: 1px dotted #8a0303;
 }
