@@ -97,7 +97,7 @@ button:hover { background-color: #6b0202; transform: translateY(-2px); box-shado
 }
 
 /* ★★★★★★★★★★★★★★★★★★★★★
-    ここからがあらすじ用の新しいスタイルです
+    ここがあらすじ用の修正箇所です
 ★★★★★★★★★★★★★★★★★★★★★ */
 .synopsis-container {
     margin: 30px 0;
@@ -116,18 +116,20 @@ button:hover { background-color: #6b0202; transform: translateY(-2px); box-shado
     transform: none;
     box-shadow: none;
 }
+/* 普段はコンテンツを完全に隠す */
 .collapsible-content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s ease-out;
+    transition: max-height 0.5s ease-out, padding 0.5s ease-out; /* paddingにもアニメーションを適用 */
     background-color: rgba(0, 0, 0, 0.03);
     border: 1px solid #dcd3c2;
     border-top: none;
-    padding: 0 20px;
+    padding: 0 20px; /* ★★★ 修正点：最初は上下のpaddingを0にする ★★★ */
     margin: 0;
     text-align: left;
 }
+/* is-openクラスがついた時に、高さを広げてpaddingもつける */
 .collapsible-content.is-open {
-    max-height: 500px; /* 十分な高さを確保 */
-    padding: 10px 20px;
+    max-height: 500px; 
+    padding: 10px 20px; /* ★★★ 修正点：開いた時だけ上下にpaddingをつける ★★★ */
 }
