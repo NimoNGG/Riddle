@@ -5,7 +5,7 @@
 body {
     background-color: #3a3022; /* 背景を暗めの茶色に */
     background-image: url("https://www.transparenttextures.com/patterns/old-wall.png"); /* 古い壁のテクスチャを追加 */
-    font-family: 'EB Garamond', serif; /* 読み込んだ古風なフォントを指定 */
+    font-family: 'Shippori Mincho', 'EB Garamond', serif;
     color: #4a3d2b; /* 文字の色を濃い茶色に */
     display: flex;
     justify-content: center;
@@ -89,4 +89,72 @@ button:hover {
     color: #8a0303; /* リンクの色をボタンと合わせる */
     text-decoration: none;
     border-bottom: 1px dotted #8a0303;
+}
+/* --- ここから追加 --- */
+
+/* index.html: あらすじ部分のスタイル */
+.story {
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid #dcd3c2;
+    padding: 10px 20px;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.story h2 {
+    text-align: center;
+    font-size: 1.5em;
+    border-bottom: 1px solid #c8bca9;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.story p {
+    font-size: 1.1em;
+    line-height: 2;
+}
+
+/* index.html: 謎選択部分のスタイル */
+.quiz-selection {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2列にする */
+    gap: 15px; /* ボタンの間の余白 */
+    margin-top: 20px;
+}
+
+.quiz-selection a {
+    display: block;
+    padding: 15px;
+    background-color: #4a3d2b;
+    color: #f5eeda;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 3px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    transition: all 0.2s ease;
+}
+
+.quiz-selection a:hover {
+    background-color: #3a3022;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+}
+
+/* quiz.html: 謎一覧に戻るリンク */
+.back-link-container {
+    margin-top: 40px;
+    text-align: center;
+}
+
+.back-link-container a {
+    color: #4a3d2b;
+    text-decoration: none;
+    border-bottom: 1px dotted #4a3d2b;
+}
+
+/* 正解時のキーワードのスタイル */
+.keyword {
+    font-size: 1.5em;
+    color: #8a0303;
+    font-weight: bold;
 }
