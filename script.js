@@ -1,4 +1,4 @@
-// ★ 6つの手がかりと、新しいあいことば、答えを設定
+// 6つの手がかりと、あいことば、答えを設定
 const quizzes = [
     {
         title: "第一の手がかり",
@@ -38,18 +38,25 @@ const quizzes = [
     }
 ];
 
-// ページの読み込みが完了したときに実行される処理
+// ページの読み込みが完了したときに、どのページか判断して適切な関数を実行
 document.addEventListener("DOMContentLoaded", () => {
+    // もしquiz.htmlなら、謎を設定
     if (document.getElementById("quizTitle")) {
         setupQuiz();
     }
+    // ★★★ もしsummary.htmlなら、一覧表示を実行 ★★★
+    if (document.getElementById("summary-list")) {
+        displaySummary();
+    }
 });
 
+// 解答済みの謎のIDリストをブラウザの記録から取得する関数
 function getSolvedQuizzes() {
     const solved = localStorage.getItem('solvedQuizzes');
     return solved ? JSON.parse(solved) : [];
 }
 
+// 謎ページ（quiz.html）をセットアップする関数
 function setupQuiz() {
     const params = new URLSearchParams(window.location.search);
     const quizId = parseInt(params.get("q"));
@@ -69,6 +76,7 @@ function setupQuiz() {
     }
 }
 
+// 「あいことばを送信」ボタンが押されたときの処理
 function checkAnswer() {
     const params = new URLSearchParams(window.location.search);
     const quizId = parseInt(params.get("q"));
@@ -93,6 +101,7 @@ function checkAnswer() {
     }
 }
 
+// 解答済みの表示状態に切り替える関数
 function showSolvedState(quizData) {
     const answerInput = document.getElementById("answerInput");
     const submitButton = document.querySelector("button");
@@ -112,4 +121,36 @@ function showSolvedState(quizData) {
         };
         resultElement.parentNode.insertBefore(showAnswerBtn, resultElement.nextSibling);
     }
+}
+
+// ★★★ 手がかり一覧ページ（summary.html）を生成する新しい関数 ★★★
+function displaySummary() {
+    const summaryContainer = document.getElementById("summary-list");
+    const solvedQuizzes = getSolvedQuizzes();
+
+    // 全ての謎（手がかり）をループ処理
+    quizzes.forEach((quiz, index) => {
+        const quizId = index + 1;
+        const summaryItem = document.createElement("div");
+        summaryItem.classList.add("summary-item");
+
+        let contentHTML;
+
+        // もし解答済みのリストにIDが含まれていれば
+        if (solvedQuizzes.includes(quizId)) {
+            summaryItem.classList.add("solved"); // 解答済みクラスを追加
+            contentHTML = `
+                <h3>${quiz.title}</h3>
+                <p>${quiz.keyword}</p>
+            `;
+        } else {
+            // 未解答の場合
+            contentHTML = `
+                <h3>${quiz.title}</h3>
+                <p>--- LOCKED ---</p>
+            `;
+        }
+        summaryItem.innerHTML = contentHTML;
+        summaryContainer.appendChild(summaryItem);
+    });
 }
