@@ -43,10 +43,6 @@ button:hover { background-color: #6b0202; transform: translateY(-2px); box-shado
     display: block; margin-top: 10px; animation: fadeIn 1s ease-out;
 }
 /* index.html用スタイル */
-.story {
-    background-color: rgba(0, 0, 0, 0.03); border: 1px solid #dcd3c2;
-    padding: 10px 20px; margin: 30px 0; text-align: left;
-}
 .story p { font-size: 1.1em; line-height: 2; }
 .quiz-selection { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
 .quiz-selection a {
@@ -82,6 +78,15 @@ button:hover { background-color: #6b0202; transform: translateY(-2px); box-shado
 }
 .summary-item p { font-size: 1.1em; margin: 0; font-weight: bold; color: #8a0303; }
 .summary-item:not(.solved) p { color: #a3957d; font-family: monospace; letter-spacing: 2px; }
+/* 全クリ時のメッセージ */
+.all-solved-link-container { margin-top: 25px; padding-top: 25px; border-top: 2px solid #c8bca9; }
+.all-solved-link-container a { font-size: 1.3em; font-weight: bold; color: #556b2f; text-decoration: none; border-bottom: 1px dotted #556b2f; }
+.final-message {
+    margin-top: 30px; padding: 20px; border: 2px solid #c8bca9;
+    background-color: #4a3d2b; color: #f5eeda; font-size: 1.4em;
+    font-weight: bold; border-radius: 5px; box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+    animation: fadeIn 1.5s ease-out;
+}
 /* スマートフォン用のデザイン */
 @media (max-width: 600px) {
     .container { padding: 25px 20px; width: 100%; }
@@ -92,33 +97,37 @@ button:hover { background-color: #6b0202; transform: translateY(-2px); box-shado
 }
 
 /* ★★★★★★★★★★★★★★★★★★★★★
-    ここからが新しく追加したスタイルです
+    ここからがあらすじ用の新しいスタイルです
 ★★★★★★★★★★★★★★★★★★★★★ */
-
-/* 全クリ時にquiz.htmlに表示されるリンク */
-.all-solved-link-container {
-    margin-top: 25px;
-    padding-top: 25px;
-    border-top: 2px solid #c8bca9;
+.synopsis-container {
+    margin: 30px 0;
 }
-.all-solved-link-container a {
-    font-size: 1.3em;
-    font-weight: bold;
-    color: #556b2f;
-    text-decoration: none;
-    border-bottom: 1px dotted #556b2f;
-}
-
-/* 全クリ時にsummary.htmlに表示される最終メッセージ */
-.final-message {
-    margin-top: 30px;
-    padding: 20px;
+.synopsis-button {
+    width: 100%;
+    background-color: transparent;
     border: 2px solid #c8bca9;
-    background-color: #4a3d2b;
-    color: #f5eeda;
-    font-size: 1.4em;
-    font-weight: bold;
+    color: #4a3d2b;
     border-radius: 5px;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.4);
-    animation: fadeIn 1.5s ease-out;
+    margin: 0;
+    box-shadow: none;
+}
+.synopsis-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: none;
+    box-shadow: none;
+}
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    background-color: rgba(0, 0, 0, 0.03);
+    border: 1px solid #dcd3c2;
+    border-top: none;
+    padding: 0 20px;
+    margin: 0;
+    text-align: left;
+}
+.collapsible-content.is-open {
+    max-height: 500px; /* 十分な高さを確保 */
+    padding: 10px 20px;
 }
