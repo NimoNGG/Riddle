@@ -128,4 +128,31 @@ button:hover {
 
 /* --- quiz.html用スタイル --- */
 .back-link-container { margin-top: 40px; text-align: center; }
-.back-link-container a { color: #4a3d2b; text-decoration: none; border-bottom: 1px dotted #4a3d2b; }
+.back-link-container a { color: #4a3d2b; text-decoration: none; border-bottom: 1px dotted #4a3d2b; 
+
+/* --- マップ確認ボタンのスタイル（ここから追加） --- */
+.map-button-container {
+    text-align: center; /* ボタンを中央に配置 */
+    margin-top: 25px; /* 上のボタンとの間隔を空ける */
+}
+
+.map-button {
+    display: inline-block; /* aタグをボタンのように見せるため */
+    padding: 15px 30px; /* ボタンのサイズを調整 */
+    background-color: #6d5b43; /* 手がかりとは違う、少し落ち着いた茶色に */
+    color: #f5eeda;
+    text-decoration: none;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.1em;
+    border-radius: 5px; /* 少し角を丸める */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    transition: all 0.2s ease;
+    border: 1px solid #5b4a32;
+}
+
+.map-button:hover {
+    background-color: #5b4a32;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+}
+
