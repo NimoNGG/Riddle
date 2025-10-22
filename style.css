@@ -3,11 +3,10 @@
 
 /* ページ全体のスタイル */
 body {
-    /* 新しい宝の地図風の背景画像に変更 */
-    background-color: #6F5B49; /* 背景色を少し濃いめに */
-    background-image: url("https://www.transparenttextures.com/patterns/worn-dots.png"); /* ボロボロの紙の質感 */
+    background-color: #3a3022; /* 背景を暗めの茶色に */
+    background-image: url("https://www.transparenttextures.com/patterns/old-wall.png"); /* 古い壁のテクスチャを追加 */
     font-family: 'Shippori Mincho', 'EB Garamond', serif;
-    color: #4a3d2b;
+    color: #4a3d2b; /* 文字の色を濃い茶色に */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -18,16 +17,14 @@ body {
 
 /* コンテンツを囲むボックス（古文書本体） */
 .container {
-    background-color: #f3e9d2; /* 少し黄ばんだ羊皮紙の色 */
+    background-color: #f5eeda; /* 羊皮紙の色 */
     padding: 40px 50px;
-    border: 3px solid transparent; /* 透明なボーダーを設定 */
+    border: 2px solid #c8bca9;
     border-radius: 5px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.6), inset 0 0 20px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(0,0,0,0.2); /* リアルな影を追加 */
     text-align: center;
     width: 90%;
     max-width: 600px;
-    position: relative; /* 破れた端のデザインのために追加 */
-    border-image: url("data:image/svg+xml;charset=utf8,%3Csvg version='1.1' width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cstyle%3Epath%7Bstroke-width:3;stroke:%23856d4b%7D%3C/style%3E%3Cpath d='M0 0 H 200 V 200 H 0 Z' fill='none' stroke-dasharray='10 6 4 3 8 5'/%3E%3C/svg%3E") 5 stretch; /* 破れた線のようなボーダー */
 }
 
 h1 {
@@ -189,4 +186,5 @@ button:hover {
         width: 90%;
     }
 }
+
 
