@@ -158,3 +158,31 @@ button:hover {
     color: #8a0303;
     font-weight: bold;
 }
+
+/* --- スマートフォン用のデザイン (ここから追加) --- */
+@media (max-width: 600px) {
+
+    /* コンテンツを囲むボックスの余白を調整 */
+    .container {
+        padding: 25px 20px; /* 上下の余白を25px、左右の余白を20pxに減らす */
+        width: 100%; /* 横幅を画面いっぱいに */
+    }
+
+    h1 {
+        font-size: 2em; /* タイトルの文字サイズを少し小さく */
+    }
+
+    .question, .story p {
+        font-size: 1.1em; /* 問題文やあらすじの文字サイズを調整 */
+    }
+
+    /* index.html: 謎選択ボタンを1列にする */
+    .quiz-selection {
+        grid-template-columns: 1fr; /* 2列から1列に変更 */
+    }
+
+    /* 入力欄の幅を調整 */
+    #answerInput {
+        width: 90%;
+    }
+}
