@@ -3,10 +3,10 @@
 
 /* ページ全体のスタイル */
 body {
-    background-color: #3a3022; /* 背景を暗めの茶色に */
-    background-image: url("https://www.transparenttextures.com/patterns/old-wall.png"); /* 古い壁のテクスチャを追加 */
-    font-family: 'EB Garamond', serif; /* 読み込んだ古風なフォントを指定 */
-    color: #4a3d2b; /* 文字の色を濃い茶色に */
+    background-color: #3a3222; /* 背景を少し調整 */
+    background-image: url("https://www.transparenttextures.com/patterns/old-wall.png");
+    font-family: 'EB Garamond', serif;
+    color: #4a3d2b;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,13 +15,13 @@ body {
     padding: 20px;
 }
 
-/* コンテンツを囲むボックス（古文書本体） */
+/* コンテンツを囲むボックス */
 .container {
-    background-color: #f5eeda; /* 羊皮紙の色 */
+    background-color: #f5eeda;
     padding: 40px 50px;
     border: 2px solid #c8bca9;
     border-radius: 5px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(0,0,0,0.2); /* リアルな影を追加 */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(0,0,0,0.2);
     text-align: center;
     width: 90%;
     max-width: 600px;
@@ -30,69 +30,90 @@ body {
 h1 {
     font-size: 2.5em;
     font-weight: normal;
-    border-bottom: 2px solid #c8bca9; /* 下線を追加 */
+    border-bottom: 2px solid #c8bca9;
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
 
-/* 問題文のスタイル */
 .question {
     font-size: 1.4em;
     line-height: 1.8;
     margin-bottom: 30px;
 }
 
-/* 入力欄のスタイル */
 #answerInput {
     width: 80%;
     padding: 12px;
     font-size: 1.1em;
-    font-family: 'EB Garamond', serif; /* 入力欄にもフォントを適用 */
+    font-family: 'EB Garamond', serif;
     border: none;
-    border-bottom: 2px solid #a3957d; /* 下線のみのデザインに */
-    background-color: transparent; /* 背景を透過 */
+    border-bottom: 2px solid #a3957d;
+    background-color: transparent;
     text-align: center;
     color: #4a3d2b;
 }
 #answerInput:focus {
-    outline: none; /* クリックしたときの青い枠線を消す */
+    outline: none;
     border-bottom-color: #4a3d2b;
 }
 
-/* ボタン（封蝋風）のスタイル */
 button {
     padding: 12px 25px;
     font-size: 1.1em;
     font-family: 'EB Garamond', serif;
-    background-color: #8a0303; /* 封蝋の赤色 */
+    background-color: #8a0303;
     color: #f5eeda;
     border: 2px solid #6b0202;
-    border-radius: 50px; /* 角を丸くして円に近づける */
+    border-radius: 50px;
     cursor: pointer;
     margin-top: 20px;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
-    transition: all 0.2s ease; /* アニメーションを追加 */
+    transition: all 0.2s ease;
 }
 button:hover {
     background-color: #6b0202;
-    transform: translateY(-2px); /* 少し浮き上がる動き */
+    transform: translateY(-2px);
     box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
 }
 
-/* 結果表示部分のスタイル */
 #result {
     margin-top: 25px;
     font-size: 1.2em;
     font-weight: bold;
 }
-#result a {
-    color: #8a0303; /* リンクの色をボタンと合わせる */
-    text-decoration: none;
-    border-bottom: 1px dotted #8a0303;
-}
-/* --- ここから追加 --- */
 
-/* index.html: あらすじ部分のスタイル */
+/* --- 正解時のアニメーションとキーワードのスタイル --- */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.keyword {
+    font-size: 1.2em;
+    color: #8a0303;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+    animation: fadeIn 1s ease-out; /* アニメーションを適用 */
+}
+
+
+/* --- スマートフォン用のデザイン --- */
+@media (max-width: 600px) {
+    .container { padding: 25px 20px; width: 100%; }
+    h1 { font-size: 2em; }
+    .question, .story p { font-size: 1.1em; }
+    .quiz-selection { grid-template-columns: 1fr; }
+    #answerInput { width: 90%; }
+}
+
+/* --- index.html用スタイル --- */
 .story {
     background-color: rgba(0, 0, 0, 0.03);
     border: 1px solid #dcd3c2;
@@ -100,92 +121,11 @@ button:hover {
     margin: 30px 0;
     text-align: left;
 }
+.story p { font-size: 1.1em; line-height: 2; }
+.quiz-selection { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+.quiz-selection a { display: block; padding: 15px; background-color: #4a3d2b; color: #f5eeda; text-decoration: none; text-align: center; border-radius: 3px; box-shadow: 2px 2px 5px rgba(0,0,0,0.4); transition: all 0.2s ease; }
+.quiz-selection a:hover { background-color: #3a3022; transform: translateY(-2px); box-shadow: 4px 4px 8px rgba(0,0,0,0.4); }
 
-.story h2 {
-    text-align: center;
-    font-size: 1.5em;
-    border-bottom: 1px solid #c8bca9;
-    padding-bottom: 5px;
-    margin-bottom: 15px;
-}
-
-.story p {
-    font-size: 1.1em;
-    line-height: 2;
-}
-
-/* index.html: 謎選択部分のスタイル */
-.quiz-selection {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* 2列にする */
-    gap: 15px; /* ボタンの間の余白 */
-    margin-top: 20px;
-}
-
-.quiz-selection a {
-    display: block;
-    padding: 15px;
-    background-color: #4a3d2b;
-    color: #f5eeda;
-    text-decoration: none;
-    text-align: center;
-    border-radius: 3px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
-    transition: all 0.2s ease;
-}
-
-.quiz-selection a:hover {
-    background-color: #3a3022;
-    transform: translateY(-2px);
-    box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
-}
-
-/* quiz.html: 謎一覧に戻るリンク */
-.back-link-container {
-    margin-top: 40px;
-    text-align: center;
-}
-
-.back-link-container a {
-    color: #4a3d2b;
-    text-decoration: none;
-    border-bottom: 1px dotted #4a3d2b;
-}
-
-/* 正解時のキーワードのスタイル */
-.keyword {
-    font-size: 1.5em;
-    color: #8a0303;
-    font-weight: bold;
-}
-
-/* --- スマートフォン用のデザイン (ここから追加) --- */
-@media (max-width: 600px) {
-
-    /* コンテンツを囲むボックスの余白を調整 */
-    .container {
-        padding: 25px 20px; /* 上下の余白を25px、左右の余白を20pxに減らす */
-        width: 100%; /* 横幅を画面いっぱいに */
-    }
-
-    h1 {
-        font-size: 2em; /* タイトルの文字サイズを少し小さく */
-    }
-
-    .question, .story p {
-        font-size: 1.1em; /* 問題文やあらすじの文字サイズを調整 */
-    }
-
-    /* index.html: 謎選択ボタンを1列にする */
-    .quiz-selection {
-        grid-template-columns: 1fr; /* 2列から1列に変更 */
-    }
-
-    /* 入力欄の幅を調整 */
-    #answerInput {
-        width: 90%;
-    }
-}
-
-
-
+/* --- quiz.html用スタイル --- */
+.back-link-container { margin-top: 40px; text-align: center; }
+.back-link-container a { color: #4a3d2b; text-decoration: none; border-bottom: 1px dotted #4a3d2b; }
