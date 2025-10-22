@@ -82,13 +82,14 @@ button:hover { background-color: #6b0202; transform: translateY(-2px); box-shado
 }
 .quiz-selection a:hover { background-color: #3a3022; transform: translateY(-2px); box-shadow: 4px 4px 8px rgba(0,0,0,0.4); }
 
-/* ★★★ 新しいボタンの色を指定 ★★★ */
+/* ★★★ ここが修正箇所です ★★★ */
+.summary-link, .map-link {
+    grid-column: 1 / -1; /* この設定でボタンが2列分の幅になります */
+}
 .summary-link {
-    grid-column: 1 / -1;
     background-color: #465a65; /* 少し青みがかった賢者の色 */
 }
 .map-link {
-    grid-column: 1 / -1;
     background-color: #556b2f; /* 少し緑がかった探検の色 */
 }
 
@@ -107,7 +108,7 @@ button:hover { background-color: #6b0202; transform: translateY(-2px); box-shado
 }
 .back-button:hover { background-color: #3a3022; transform: translateY(-2px); box-shadow: 4px 4px 8px rgba(0,0,0,0.4); }
 
-/* ★★★ summary.html 用の新しいスタイルを追加 ★★★ */
+/* --- summary.html 用のスタイル --- */
 .summary-list-container {
     margin-top: 20px;
     text-align: left;
