@@ -3,7 +3,7 @@
 
 /* ページ全体のスタイル */
 body {
-    background-color: #3a3222; /* 背景を少し調整 */
+    background-color: #3a3222;
     background-image: url("https://www.transparenttextures.com/patterns/old-wall.png");
     font-family: 'EB Garamond', serif;
     color: #4a3d2b;
@@ -27,13 +27,14 @@ body {
     max-width: 600px;
 }
 
-h1 {
-    font-size: 2.5em;
+h1, h2 {
     font-weight: normal;
     border-bottom: 2px solid #c8bca9;
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
+h1 { font-size: 2.5em; }
+h2 { font-size: 1.8em; }
 
 .question {
     font-size: 1.4em;
@@ -82,35 +83,17 @@ button:hover {
     font-weight: bold;
 }
 
-/* --- 正解時のアニメーションとキーワードのスタイル --- */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
-
 .keyword {
     font-size: 1.2em;
     color: #8a0303;
     font-weight: bold;
     display: block;
     margin-top: 10px;
-    animation: fadeIn 1s ease-out; /* アニメーションを適用 */
-}
-
-
-/* --- スマートフォン用のデザイン --- */
-@media (max-width: 600px) {
-    .container { padding: 25px 20px; width: 100%; }
-    h1 { font-size: 2em; }
-    .question, .story p { font-size: 1.1em; }
-    .quiz-selection { grid-template-columns: 1fr; }
-    #answerInput { width: 90%; }
+    animation: fadeIn 1s ease-out;
 }
 
 /* --- index.html用スタイル --- */
@@ -125,34 +108,48 @@ button:hover {
 .quiz-selection { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
 .quiz-selection a { display: block; padding: 15px; background-color: #4a3d2b; color: #f5eeda; text-decoration: none; text-align: center; border-radius: 3px; box-shadow: 2px 2px 5px rgba(0,0,0,0.4); transition: all 0.2s ease; }
 .quiz-selection a:hover { background-color: #3a3022; transform: translateY(-2px); box-shadow: 4px 4px 8px rgba(0,0,0,0.4); }
+.map-link { grid-column: 1 / -1; background-color: #6d5b43; }
 
 /* --- quiz.html用スタイル --- */
 .back-link-container { margin-top: 40px; text-align: center; }
-.back-link-container a { color: #4a3d2b; text-decoration: none; border-bottom: 1px dotted #4a3d2b; 
+.back-link-container a { color: #4a3d2b; text-decoration: none; border-bottom: 1px dotted #4a3d2b; }
 
-/* --- マップ確認ボタンのスタイル（ここから追加） --- */
-.map-button-container {
-    text-align: center; /* ボタンを中央に配置 */
-    margin-top: 25px; /* 上のボタンとの間隔を空ける */
+/* --- スマートフォン用のデザイン --- */
+@media (max-width: 600px) {
+    .container { padding: 25px 20px; width: 100%; }
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.5em; }
+    .question, .story p { font-size: 1.1em; }
+    .quiz-selection { grid-template-columns: 1fr; }
+    #answerInput { width: 90%; }
 }
 
-.map-button {
-    display: inline-block; /* aタグをボタンのように見せるため */
-    padding: 15px 30px; /* ボタンのサイズを調整 */
-    background-color: #6d5b43; /* 手がかりとは違う、少し落ち着いた茶色に */
+/* ★★★ ここから map.html 用の新しいスタイルを追加 ★★★ */
+.map-image-container {
+    margin-top: 20px;
+}
+.map-image {
+    max-width: 100%; /* コンテナの幅に合わせて画像が縮小するように */
+    height: auto; /* 画像の縦横比を保つ */
+    border: 2px solid #c8bca9; /* 画像にも枠線を追加 */
+}
+.back-button-container {
+    margin-top: 30px;
+}
+.back-button {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-family: 'EB Garamond', serif;
+    background-color: #4a3d2b;
     color: #f5eeda;
     text-decoration: none;
-    font-family: 'EB Garamond', serif;
-    font-size: 1.1em;
-    border-radius: 5px; /* 少し角を丸める */
+    border-radius: 50px;
     box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
     transition: all 0.2s ease;
-    border: 1px solid #5b4a32;
 }
-
-.map-button:hover {
-    background-color: #5b4a32;
+.back-button:hover {
+    background-color: #3a3022;
     transform: translateY(-2px);
     box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
 }
-
