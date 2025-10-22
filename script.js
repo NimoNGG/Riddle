@@ -4,7 +4,7 @@ const quizzes = [
         title: "第一の手がかり",
         question: `学舎（まなびや）と学舎を繋ぐ大いなる橋。その影となりし場所に目を向けよ。<br>異国の文字が踊る店で、春雨を用いた宴が催されている。<br>その店の品書きにこそ、賢人の言葉は隠されている。`,
         answer: "クロスロード",
-        keyword: "第一の賢人の記録：場所は『3024』"
+        keyword: "第一の賢人の記録：場所は『3204』"
     },
     {
         title: "第二の手がかり",
@@ -154,3 +154,4 @@ function displaySummary() {
         summaryContainer.appendChild(summaryItem);
     });
 }
+
