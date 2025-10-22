@@ -4,7 +4,7 @@ const quizzes = [
         title: "第一の手がかり",
         question: `学舎（まなびや）と学舎を繋ぐ大いなる橋。その影となりし場所に目を向けよ。<br>異国の文字が踊る店で、春雨を用いた宴が催されている。<br>その店の品書きにこそ、賢人の言葉は隠されている。`,
         answer: "クロスロード",
-        keyword: "第一の賢人の記録：場所は『3204』"
+        keyword: "第一の賢人の記録：場所は『3024』"
     },
     {
         title: "第二の手がかり",
@@ -33,36 +33,27 @@ const quizzes = [
     {
         title: "第六の手がかり",
         question: `再び、大いなる橋の影へ。冷えた体を温める湯気が立ち上る場所がある。<br>黄金の出汁に浸かる数々の宝。その中で、最も清き白亜の円が示すものこそ最後の言葉だ。`,
-        answer: "ファウンデーション",
+        answer: "ホット", // ★★★ あいことばを「ホット」に変更 ★★★
         keyword: "第六の賢人の記録：最後の行動は『天秤の傾きを等しくする』こと"
     }
 ];
 
 // ページの読み込みが完了したときに、どのページか判断して適切な関数を実行
 document.addEventListener("DOMContentLoaded", () => {
-    // もしquiz.htmlなら、謎を設定
-    if (document.getElementById("quizTitle")) {
-        setupQuiz();
-    }
-    // ★★★ もしsummary.htmlなら、一覧表示を実行 ★★★
-    if (document.getElementById("summary-list")) {
-        displaySummary();
-    }
+    if (document.getElementById("quizTitle")) { setupQuiz(); }
+    if (document.getElementById("summary-list")) { displaySummary(); }
 });
 
-// 解答済みの謎のIDリストをブラウザの記録から取得する関数
 function getSolvedQuizzes() {
     const solved = localStorage.getItem('solvedQuizzes');
     return solved ? JSON.parse(solved) : [];
 }
 
-// 謎ページ（quiz.html）をセットアップする関数
 function setupQuiz() {
     const params = new URLSearchParams(window.location.search);
     const quizId = parseInt(params.get("q"));
     const quizIndex = quizId - 1;
     const quizData = quizzes[quizIndex];
-
     if (quizData) {
         document.getElementById("quizTitle").innerText = quizData.title;
         document.getElementById("quizQuestion").innerHTML = quizData.question;
@@ -76,7 +67,6 @@ function setupQuiz() {
     }
 }
 
-// 「あいことばを送信」ボタンが押されたときの処理
 function checkAnswer() {
     const params = new URLSearchParams(window.location.search);
     const quizId = parseInt(params.get("q"));
@@ -84,11 +74,9 @@ function checkAnswer() {
     const correctAnswer = quizzes[quizIndex].answer;
     const userAnswer = document.getElementById("answerInput").value;
     const resultElement = document.getElementById("result");
-
     if (userAnswer === correctAnswer) {
         resultElement.innerHTML = `封印解除...！<br>賢人の記録を入手した。<br><span class="keyword">${quizzes[quizIndex].keyword}</span>`;
         resultElement.style.color = "#4a3d2b";
-        
         let solvedQuizzes = getSolvedQuizzes();
         if (!solvedQuizzes.includes(quizId)) {
             solvedQuizzes.push(quizId);
@@ -101,57 +89,54 @@ function checkAnswer() {
     }
 }
 
-// 解答済みの表示状態に切り替える関数
 function showSolvedState(quizData) {
     const answerInput = document.getElementById("answerInput");
     const submitButton = document.querySelector("button");
     const resultElement = document.getElementById("result");
-
     answerInput.style.display = "none";
     submitButton.style.display = "none";
     resultElement.innerHTML = `記録解放済み：<br><span class="keyword">${quizData.keyword}</span>`;
     resultElement.style.color = "#4a3d2b";
-
     if (!document.getElementById("showAnswerBtn")) {
         const showAnswerBtn = document.createElement("button");
         showAnswerBtn.id = "showAnswerBtn";
         showAnswerBtn.innerText = "あいことばを確認";
-        showAnswerBtn.onclick = () => {
-            alert(`この手がかりのあいことばは「${quizData.answer}」だ。`);
-        };
+        showAnswerBtn.onclick = () => { alert(`この手がかりのあいことばは「${quizData.answer}」だ。`); };
         resultElement.parentNode.insertBefore(showAnswerBtn, resultElement.nextSibling);
+    }
+    // ★★★ すべて解答済みの場合のメッセージを追加 ★★★
+    const solvedQuizzes = getSolvedQuizzes();
+    if (solvedQuizzes.length === quizzes.length && !document.getElementById("all-solved-link")) {
+        const linkContainer = document.createElement("div");
+        linkContainer.id = "all-solved-link";
+        linkContainer.classList.add("all-solved-link-container");
+        linkContainer.innerHTML = `<a href="summary.html">全ての手がかりが集った。一覧を見にいこう。</a>`;
+        resultElement.parentNode.appendChild(linkContainer);
     }
 }
 
-// ★★★ 手がかり一覧ページ（summary.html）を生成する新しい関数 ★★★
 function displaySummary() {
     const summaryContainer = document.getElementById("summary-list");
     const solvedQuizzes = getSolvedQuizzes();
-
-    // 全ての謎（手がかり）をループ処理
     quizzes.forEach((quiz, index) => {
         const quizId = index + 1;
         const summaryItem = document.createElement("div");
         summaryItem.classList.add("summary-item");
-
         let contentHTML;
-
-        // もし解答済みのリストにIDが含まれていれば
         if (solvedQuizzes.includes(quizId)) {
-            summaryItem.classList.add("solved"); // 解答済みクラスを追加
-            contentHTML = `
-                <h3>${quiz.title}</h3>
-                <p>${quiz.keyword}</p>
-            `;
+            summaryItem.classList.add("solved");
+            contentHTML = `<h3>${quiz.title}</h3><p>${quiz.keyword}</p>`;
         } else {
-            // 未解答の場合
-            contentHTML = `
-                <h3>${quiz.title}</h3>
-                <p>--- LOCKED ---</p>
-            `;
+            contentHTML = `<h3>${quiz.title}</h3><p>--- LOCKED ---</p>`;
         }
         summaryItem.innerHTML = contentHTML;
         summaryContainer.appendChild(summaryItem);
     });
+    // ★★★ すべて解答済みの場合の最終メッセージを追加 ★★★
+    if (solvedQuizzes.length === quizzes.length) {
+        const finalMessage = document.createElement("div");
+        finalMessage.classList.add("final-message");
+        finalMessage.innerText = "この手がかりをもとに、失われた天秤を探しに行こう";
+        summaryContainer.parentNode.appendChild(finalMessage);
+    }
 }
-
