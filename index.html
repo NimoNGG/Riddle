@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>謎解き：最初の試練</title>
+    <title>謎解き</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital@0;1&family=Shippori+Mincho&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
-        <h1>第一の謎</h1>
-        <p class="question">
-            "天秤"が示す正義の塔へ。そこで"六法"の頁をめくれ。
-            <br>
-            最初の答えは、最も重き"罪"の名の下に。
-            <br>
-            その日本語読みをひらがなで入力せよ。
-        </p>
-        <input type="text" id="answerInput" placeholder="こたえをいれる">
+        <h1 id="quizTitle"></h1>
+        <p class="question" id="quizQuestion"></p>
+        
+        <input type="text" id="answerInput" placeholder="あいことばをいれる">
         <button onclick="checkAnswer()">こたえを送信</button>
+        
         <p id="result"></p>
+
+        <div class="back-link-container">
+            <a href="index.html">謎一覧にもどる</a>
+        </div>
     </div>
 
     <script src="script.js"></script>
