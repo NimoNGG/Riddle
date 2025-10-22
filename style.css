@@ -75,6 +75,8 @@ button:hover { background-color: #6b0202; transform: translateY(-2px); box-shado
 }
 .story p { font-size: 1.1em; line-height: 2; }
 .quiz-selection { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+
+/* すべてのボタンの共通スタイル */
 .quiz-selection a {
     display: block; padding: 15px; background-color: #4a3d2b; color: #f5eeda;
     text-decoration: none; text-align: center; border-radius: 3px;
@@ -82,16 +84,23 @@ button:hover { background-color: #6b0202; transform: translateY(-2px); box-shado
 }
 .quiz-selection a:hover { background-color: #3a3022; transform: translateY(-2px); box-shadow: 4px 4px 8px rgba(0,0,0,0.4); }
 
-/* ★★★ ここが修正箇所です ★★★ */
-.summary-link, .map-link {
-    grid-column: 1 / -1; /* この設定でボタンが2列分の幅になります */
-}
-.summary-link {
+
+/* ★★★★★★★★★★★★★★★★
+    ここが今回の修正箇所です
+★★★★★★★★★★★★★★★★ */
+
+/* 手がかり一覧ボタンの個別スタイル */
+.quiz-selection .summary-link {
+    grid-column: 1 / -1; /* 横幅を2列分に */
     background-color: #465a65; /* 少し青みがかった賢者の色 */
 }
-.map-link {
+
+/* マップ確認ボタンの個別スタイル */
+.quiz-selection .map-link {
+    grid-column: 1 / -1; /* 横幅を2列分に */
     background-color: #556b2f; /* 少し緑がかった探検の色 */
 }
+
 
 /* --- quiz.html用スタイル --- */
 .back-link-container { margin-top: 40px; text-align: center; }
