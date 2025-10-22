@@ -43,113 +43,105 @@ h2 { font-size: 1.8em; }
 }
 
 #answerInput {
-    width: 80%;
-    padding: 12px;
-    font-size: 1.1em;
-    font-family: 'EB Garamond', serif;
-    border: none;
-    border-bottom: 2px solid #a3957d;
-    background-color: transparent;
-    text-align: center;
-    color: #4a3d2b;
+    width: 80%; padding: 12px; font-size: 1.1em; font-family: 'EB Garamond', serif;
+    border: none; border-bottom: 2px solid #a3957d; background-color: transparent;
+    text-align: center; color: #4a3d2b;
 }
-#answerInput:focus {
-    outline: none;
-    border-bottom-color: #4a3d2b;
-}
+#answerInput:focus { outline: none; border-bottom-color: #4a3d2b; }
 
 button {
-    padding: 12px 25px;
-    font-size: 1.1em;
-    font-family: 'EB Garamond', serif;
-    background-color: #8a0303;
-    color: #f5eeda;
-    border: 2px solid #6b0202;
-    border-radius: 50px;
-    cursor: pointer;
-    margin-top: 20px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
-    transition: all 0.2s ease;
+    padding: 12px 25px; font-size: 1.1em; font-family: 'EB Garamond', serif;
+    background-color: #8a0303; color: #f5eeda; border: 2px solid #6b0202;
+    border-radius: 50px; cursor: pointer; margin-top: 20px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4); transition: all 0.2s ease;
 }
-button:hover {
-    background-color: #6b0202;
-    transform: translateY(-2px);
-    box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
-}
+button:hover { background-color: #6b0202; transform: translateY(-2px); box-shadow: 4px 4px 8px rgba(0,0,0,0.4); }
 
-#result {
-    margin-top: 25px;
-    font-size: 1.2em;
-    font-weight: bold;
-}
+#result { margin-top: 25px; font-size: 1.2em; font-weight: bold; }
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 .keyword {
-    font-size: 1.2em;
-    color: #8a0303;
-    font-weight: bold;
-    display: block;
-    margin-top: 10px;
-    animation: fadeIn 1s ease-out;
+    font-size: 1.2em; color: #8a0303; font-weight: bold;
+    display: block; margin-top: 10px; animation: fadeIn 1s ease-out;
 }
 
 /* --- index.html用スタイル --- */
 .story {
-    background-color: rgba(0, 0, 0, 0.03);
-    border: 1px solid #dcd3c2;
-    padding: 10px 20px;
-    margin: 30px 0;
-    text-align: left;
+    background-color: rgba(0, 0, 0, 0.03); border: 1px solid #dcd3c2;
+    padding: 10px 20px; margin: 30px 0; text-align: left;
 }
 .story p { font-size: 1.1em; line-height: 2; }
 .quiz-selection { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-.quiz-selection a { display: block; padding: 15px; background-color: #4a3d2b; color: #f5eeda; text-decoration: none; text-align: center; border-radius: 3px; box-shadow: 2px 2px 5px rgba(0,0,0,0.4); transition: all 0.2s ease; }
+.quiz-selection a {
+    display: block; padding: 15px; background-color: #4a3d2b; color: #f5eeda;
+    text-decoration: none; text-align: center; border-radius: 3px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4); transition: all 0.2s ease;
+}
 .quiz-selection a:hover { background-color: #3a3022; transform: translateY(-2px); box-shadow: 4px 4px 8px rgba(0,0,0,0.4); }
-.map-link { grid-column: 1 / -1; background-color: #6d5b43; }
+
+/* ★★★ 新しいボタンの色を指定 ★★★ */
+.summary-link {
+    grid-column: 1 / -1;
+    background-color: #465a65; /* 少し青みがかった賢者の色 */
+}
+.map-link {
+    grid-column: 1 / -1;
+    background-color: #556b2f; /* 少し緑がかった探検の色 */
+}
 
 /* --- quiz.html用スタイル --- */
 .back-link-container { margin-top: 40px; text-align: center; }
 .back-link-container a { color: #4a3d2b; text-decoration: none; border-bottom: 1px dotted #4a3d2b; }
 
+/* --- map.html用スタイル --- */
+.map-image-container { margin-top: 20px; }
+.map-image { max-width: 100%; height: auto; border: 2px solid #c8bca9; }
+.back-button-container { margin-top: 30px; }
+.back-button {
+    display: inline-block; padding: 12px 25px; font-size: 1.1em; font-family: 'EB Garamond', serif;
+    background-color: #4a3d2b; color: #f5eeda; text-decoration: none; border-radius: 50px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4); transition: all 0.2s ease;
+}
+.back-button:hover { background-color: #3a3022; transform: translateY(-2px); box-shadow: 4px 4px 8px rgba(0,0,0,0.4); }
+
+/* ★★★ summary.html 用の新しいスタイルを追加 ★★★ */
+.summary-list-container {
+    margin-top: 20px;
+    text-align: left;
+}
+.summary-item {
+    background-color: rgba(0, 0, 0, 0.05);
+    border: 1px solid #dcd3c2;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+.summary-item h3 {
+    font-size: 1.2em;
+    margin: 0 0 5px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #c8bca9;
+}
+.summary-item p {
+    font-size: 1.1em;
+    margin: 0;
+    font-weight: bold;
+    color: #8a0303; /* 解答済みの文字色 */
+}
+.summary-item:not(.solved) p {
+    color: #a3957d; /* 未解答の文字色 */
+    font-family: monospace;
+    letter-spacing: 2px;
+}
+
 /* --- スマートフォン用のデザイン --- */
 @media (max-width: 600px) {
     .container { padding: 25px 20px; width: 100%; }
-    h1 { font-size: 2em; }
-    h2 { font-size: 1.5em; }
+    h1 { font-size: 2em; } h2 { font-size: 1.5em; }
     .question, .story p { font-size: 1.1em; }
     .quiz-selection { grid-template-columns: 1fr; }
     #answerInput { width: 90%; }
-}
-
-/* ★★★ ここから map.html 用の新しいスタイルを追加 ★★★ */
-.map-image-container {
-    margin-top: 20px;
-}
-.map-image {
-    max-width: 100%; /* コンテナの幅に合わせて画像が縮小するように */
-    height: auto; /* 画像の縦横比を保つ */
-    border: 2px solid #c8bca9; /* 画像にも枠線を追加 */
-}
-.back-button-container {
-    margin-top: 30px;
-}
-.back-button {
-    display: inline-block;
-    padding: 12px 25px;
-    font-size: 1.1em;
-    font-family: 'EB Garamond', serif;
-    background-color: #4a3d2b;
-    color: #f5eeda;
-    text-decoration: none;
-    border-radius: 50px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
-    transition: all 0.2s ease;
-}
-.back-button:hover {
-    background-color: #3a3022;
-    transform: translateY(-2px);
-    box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
 }
