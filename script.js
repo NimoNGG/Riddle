@@ -34,17 +34,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("scenario-selection")) { initScenarioListPage(); }
     if (document.getElementById("scenario-title")) { initScenarioViewerPage(); }
     if (document.getElementById("quizTitle")) { setupQuiz(); }
+    if (document.getElementById("summary-list")) { displaySummary(); }
 });
 
-// index.html の初期化
 function initIndexPage() {
     const quizContainer = document.getElementById("quiz-selection");
+    if (!quizContainer) return;
     const solvedCount = getSolvedCount();
-
+    quizContainer.innerHTML = ''; // コンテナを初期化
     quizzes.forEach((quiz, index) => {
         const link = document.createElement("a");
         link.innerText = quiz.title;
-
         if (index <= solvedCount) {
             link.href = `quiz.html?q=${index + 1}`;
         } else {
@@ -53,14 +53,11 @@ function initIndexPage() {
         }
         quizContainer.appendChild(link);
     });
-
-    // 機能ボタンの追加
     const summaryLink = document.createElement("a");
     summaryLink.href = "summary.html";
     summaryLink.className = "summary-link";
     summaryLink.innerText = "手がかりを一覧で見る";
     quizContainer.appendChild(summaryLink);
-
     const mapLink = document.createElement("a");
     mapLink.href = "map.html";
     mapLink.className = "map-link";
@@ -68,15 +65,14 @@ function initIndexPage() {
     quizContainer.appendChild(mapLink);
 }
 
-// scenario.html の初期化
 function initScenarioListPage() {
     const scenarioContainer = document.getElementById("scenario-selection");
+    if (!scenarioContainer) return;
     const solvedCount = getSolvedCount();
-
+    scenarioContainer.innerHTML = ''; // コンテナを初期化
     scenarios.forEach((scenario, index) => {
         const link = document.createElement("a");
         link.innerText = scenario.title;
-
         if (index === 0 || (index > 0 && index <= solvedCount + 1) || (index === scenarios.length - 1 && solvedCount >= quizzes.length)) {
              link.href = `scenario_viewer.html?id=${index}`;
         } else {
@@ -87,18 +83,15 @@ function initScenarioListPage() {
     });
 }
 
-// scenario_viewer.html の初期化
 function initScenarioViewerPage() {
     const params = new URLSearchParams(window.location.search);
     const scenarioId = parseInt(params.get("id"));
     const scenarioData = scenarios[scenarioId];
-
     if(scenarioData) {
         document.getElementById("scenario-title").innerText = scenarioData.title;
         document.getElementById("scenario-text").innerHTML = `<p>${scenarioData.text.replace(/\n/g, '<br><br>')}</p>`;
     }
 }
-
 
 // =============================================
 // ゲームの進行管理
@@ -123,7 +116,6 @@ function checkAnswer() {
 
     if (userAnswer === correctAnswer) {
         resultElement.innerHTML = `封印解除...！<br>賢人の記録を入手した。<br><span class="keyword">${quizzes[quizIndex].keyword}</span>`;
-        
         const currentSolvedCount = getSolvedCount();
         if (quizId > currentSolvedCount) {
             setSolvedCount(quizId);
@@ -131,6 +123,7 @@ function checkAnswer() {
         showSolvedState(quizzes[quizIndex]);
     } else {
         resultElement.textContent = "あいことばが違うようだ…";
+        resultElement.style.color = "red";
     }
 }
 
@@ -139,7 +132,6 @@ function setupQuiz() {
     const quizId = parseInt(params.get("q"));
     const quizIndex = quizId - 1;
     const quizData = quizzes[quizIndex];
-
     if (quizData) {
         document.getElementById("quizTitle").innerText = quizData.title;
         document.getElementById("quizQuestion").innerHTML = quizData.question;
@@ -158,12 +150,33 @@ function showSolvedState(quizData) {
     answerInput.style.display = "none";
     submitButton.style.display = "none";
     resultElement.innerHTML = `記録解放済み：<br><span class="keyword">${quizData.keyword}</span>`;
+    resultElement.style.color = "#4a3d2b";
+}
 
-    if (!document.getElementById("showAnswerBtn")) {
-        const showAnswerBtn = document.createElement("button");
-        showAnswerBtn.id = "showAnswerBtn";
-        showAnswerBtn.innerText = "あいことばを確認";
-        showAnswerBtn.onclick = () => { alert(`この手がかりのあいことばは「${quizData.answer}」だ。`); };
-        resultElement.parentNode.insertBefore(showAnswerBtn, resultElement.nextSibling);
+function displaySummary() {
+    const summaryContainer = document.getElementById("summary-list");
+    if (!summaryContainer) return;
+    const solvedCount = getSolvedCount();
+    summaryContainer.innerHTML = ''; // コンテナを初期化
+
+    quizzes.forEach((quiz, index) => {
+        const summaryItem = document.createElement("div");
+        summaryItem.classList.add("summary-item");
+        let contentHTML;
+        if (index < solvedCount) {
+            summaryItem.classList.add("solved");
+            contentHTML = `<h3>${quiz.title}</h3><p>${quiz.keyword}</p>`;
+        } else {
+            contentHTML = `<h3>${quiz.title}</h3><p>--- LOCKED ---</p>`;
+        }
+        summaryItem.innerHTML = contentHTML;
+        summaryContainer.appendChild(summaryItem);
+    });
+
+    if (solvedCount >= quizzes.length) {
+        const finalMessage = document.createElement("div");
+        finalMessage.classList.add("final-message");
+        finalMessage.innerText = "この手がかりをもとに、失われた天秤を探しに行こう";
+        summaryContainer.parentNode.appendChild(finalMessage);
     }
 }
