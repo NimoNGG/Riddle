@@ -70,10 +70,25 @@ function initScenarioListPage() {
     if (!scenarioContainer) return;
     const solvedCount = getSolvedCount();
     scenarioContainer.innerHTML = ''; // コンテナを初期化
+    
     scenarios.forEach((scenario, index) => {
         const link = document.createElement("a");
         link.innerText = scenario.title;
-        if (index === 0 || (index > 0 && index <= solvedCount + 1) || (index === scenarios.length - 1 && solvedCount >= quizzes.length)) {
+        let isUnlocked = false;
+
+        // ★★★ ここがロジックの修正箇所です ★★★
+        // index 0 (あらすじ) は常にアンロック
+        if (index === 0) {
+            isUnlocked = true;
+        // 終章 (最後のシナリオ) は全クリ時にアンロック
+        } else if (index === scenarios.length - 1 && solvedCount >= quizzes.length) {
+            isUnlocked = true;
+        // それ以外の章は、解いた謎の数と章の番号が一致したらアンロック
+        } else if (index > 0 && index <= solvedCount) {
+            isUnlocked = true;
+        }
+
+        if (isUnlocked) {
              link.href = `scenario_viewer.html?id=${index}`;
         } else {
             link.classList.add("locked");
@@ -180,4 +195,3 @@ function displaySummary() {
         summaryContainer.parentNode.appendChild(finalMessage);
     }
 }
-
