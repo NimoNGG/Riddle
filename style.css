@@ -60,42 +60,6 @@ h2 { font-size: 1.8em; }
     transform: translateY(-2px);
     box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
 }
-.synopsis-container {
-    margin: 30px 0;
-}
-.synopsis-button {
-    width: 100%;
-    background-color: transparent;
-    border: 2px solid #c8bca9;
-    color: #4a3d2b;
-    border-radius: 5px;
-    margin: 0;
-    box-shadow: none;
-}
-.synopsis-button:hover {
-    background-color: rgba(0, 0, 0, 0.05);
-    transform: none;
-    box-shadow: none;
-}
-.collapsible-content {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.7s ease-in-out, padding 0.7s ease-in-out;
-    background-color: rgba(0, 0, 0, 0.03);
-    border: 1px solid #dcd3c2;
-    border-top: none;
-    padding: 0 20px;
-    margin: 0;
-    text-align: left;
-}
-.collapsible-content.is-open {
-    max-height: 1000px;
-    padding: 10px 20px;
-}
-.collapsible-content p {
-    font-size: 1.1em;
-    line-height: 2;
-}
 .quiz-selection {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -128,14 +92,15 @@ h2 { font-size: 1.8em; }
 }
 
 /* ============================================= */
-/* quiz.html のスタイル */
+/* quiz.html & final_keyword.html のスタイル */
 /* ============================================= */
 .question {
     font-size: 1.4em;
     line-height: 1.8;
     margin-bottom: 30px;
 }
-#answerInput {
+/* ★★★ ここが今回の修正箇所です ★★★ */
+#answerInput, #finalAnswerInput {
     width: 80%;
     padding: 12px;
     font-size: 1.1em;
@@ -146,7 +111,7 @@ h2 { font-size: 1.8em; }
     text-align: center;
     color: #4a3d2b;
 }
-#answerInput:focus {
+#answerInput:focus, #finalAnswerInput:focus {
     outline: none;
     border-bottom-color: #4a3d2b;
 }
@@ -314,18 +279,6 @@ button:hover {
     font-family: monospace;
     letter-spacing: 2px;
 }
-.all-solved-link-container {
-    margin-top: 25px;
-    padding-top: 25px;
-    border-top: 2px solid #c8bca9;
-}
-.all-solved-link-container a {
-    font-size: 1.3em;
-    font-weight: bold;
-    color: #556b2f;
-    text-decoration: none;
-    border-bottom: 1px dotted #556b2f;
-}
 .final-message {
     margin-top: 30px;
     padding: 20px;
@@ -348,6 +301,5 @@ button:hover {
     h2 { font-size: 1.5em; }
     .question, .collapsible-content p, .scenario-text p { font-size: 1.1em; }
     .quiz-selection { grid-template-columns: 1fr; }
-    #answerInput { width: 90%; }
+    #answerInput, #finalAnswerInput { width: 90%; }
 }
-
