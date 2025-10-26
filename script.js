@@ -111,6 +111,9 @@ function setSolvedCount(count) {
     localStorage.setItem('solvedQuizCount', count);
 }
 
+// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+// ここが今回の修正箇所です
+// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 function checkAnswer() {
     const params = new URLSearchParams(window.location.search);
     const quizId = parseInt(params.get("q"));
@@ -120,27 +123,33 @@ function checkAnswer() {
     const resultElement = document.getElementById("result");
 
     if (userAnswer === correctAnswer) {
-        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-        // ここからが修正箇所です
-        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-        
+        // 正解したら、まず入力フォームを非表示にする
+        const answerInput = document.getElementById("answerInput");
+        const submitButton = document.querySelector("button");
+        answerInput.style.display = "none";
+        submitButton.style.display = "none";
+
+        // 表示するメッセージを組み立てる
         const currentSolvedCount = getSolvedCount();
         let resultMessage = `封印解除...！<br>賢人の記録を入手した。<br>`;
 
-        // まだ解いたことのないクイズだった場合のみ、メッセージを追加し、記録を更新する
+        // 今回が初めて解く問題の場合、シナリオ解放メッセージを追加
         if (quizId > currentSolvedCount) {
             resultMessage += `新たな物語が解放された。<br>`;
             setSolvedCount(quizId);
         }
 
+        // キーワードを追加
         resultMessage += `<span class="keyword">${quizzes[quizIndex].keyword}</span>`;
+
+        // 第六の記録をクリアした場合、特別なメッセージを追加
+        if (quizId === 6) {
+            resultMessage += `<br><br>手に入れた手がかりを一覧で見てみよう`;
+        }
+        
+        // 組み立てたメッセージを表示
         resultElement.innerHTML = resultMessage;
-
-        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-        // 修正はここまでです
-        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-
-        showSolvedState(quizzes[quizIndex]);
+        resultElement.style.color = "#4a3d2b";
 
     } else {
         resultElement.textContent = "あいことばが違うようだ…";
@@ -157,6 +166,7 @@ function setupQuiz() {
         document.getElementById("quizTitle").innerText = quizData.title;
         document.getElementById("quizQuestion").innerHTML = quizData.question;
         const solvedCount = getSolvedCount();
+        // ページを読み込んだ時に、すでにクリア済みの問題であれば「記録解放済み」の状態にする
         if (quizId <= solvedCount) {
             showSolvedState(quizData);
         }
