@@ -118,17 +118,30 @@ function checkAnswer() {
     const correctAnswer = quizzes[quizIndex].answer;
     const userAnswer = document.getElementById("answerInput").value;
     const resultElement = document.getElementById("result");
+
     if (userAnswer === correctAnswer) {
-        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-        // ここが今回の修正箇所です
-        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
-        resultElement.innerHTML = `封印解除...！<br>賢人の記録を入手した。<br>新たな物語が解放された。<br><span class="keyword">${quizzes[quizIndex].keyword}</span>`;
+        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+        // ここからが修正箇所です
+        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
         
         const currentSolvedCount = getSolvedCount();
+        let resultMessage = `封印解除...！<br>賢人の記録を入手した。<br>`;
+
+        // まだ解いたことのないクイズだった場合のみ、メッセージを追加し、記録を更新する
         if (quizId > currentSolvedCount) {
+            resultMessage += `新たな物語が解放された。<br>`;
             setSolvedCount(quizId);
         }
+
+        resultMessage += `<span class="keyword">${quizzes[quizIndex].keyword}</span>`;
+        resultElement.innerHTML = resultMessage;
+
+        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+        // 修正はここまでです
+        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
         showSolvedState(quizzes[quizIndex]);
+
     } else {
         resultElement.textContent = "あいことばが違うようだ…";
         resultElement.style.color = "red";
