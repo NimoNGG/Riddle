@@ -119,9 +119,9 @@ function checkAnswer() {
     const userAnswer = document.getElementById("answerInput").value;
     const resultElement = document.getElementById("result");
     if (userAnswer === correctAnswer) {
-        // ★★★★★★★★★★★★★★★★★★★★
+        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
         // ここが今回の修正箇所です
-        // ★★★★★★★★★★★★★★★★★★★★
+        // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
         resultElement.innerHTML = `封印解除...！<br>賢人の記録を入手した。<br>新たな物語が解放された。<br><span class="keyword">${quizzes[quizIndex].keyword}</span>`;
         
         const currentSolvedCount = getSolvedCount();
