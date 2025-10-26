@@ -21,26 +21,16 @@ const scenarios = [
 ];
 const FINAL_KEYWORD = "正義を革命せし者";
 
+// =============================================
+// ページの初期化処理
+// =============================================
 document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("quiz-selection")) { initIndexPage(); }
     if (document.getElementById("scenario-selection")) { initScenarioListPage(); }
     if (document.getElementById("scenario-title")) { initScenarioViewerPage(); }
     if (document.getElementById("quizTitle")) { setupQuiz(); }
     if (document.getElementById("summary-list")) { displaySummary(); }
-    const synopsisBtn = document.getElementById('toggle-synopsis-btn');
-    const synopsisContent = document.getElementById('synopsis-content');
-    if (synopsisBtn && synopsisContent) {
-        synopsisBtn.addEventListener('click', () => {
-            const isOpen = synopsisContent.classList.contains('is-open');
-            if (isOpen) {
-                synopsisContent.classList.remove('is-open');
-                synopsisBtn.textContent = '〜 あらすじを見る 〜';
-            } else {
-                synopsisContent.classList.add('is-open');
-                synopsisBtn.textContent = '〜 あらすじを閉じる 〜';
-            }
-        });
-    }
+    if (document.getElementById("finalAnswerInput")) { /* final_keyword.html用の処理 */ }
 });
 
 function initIndexPage() {
@@ -109,6 +99,9 @@ function initScenarioViewerPage() {
     }
 }
 
+// =============================================
+// ゲームの進行管理
+// =============================================
 function getSolvedCount() {
     const count = localStorage.getItem('solvedQuizCount');
     return count ? parseInt(count) : 0;
@@ -125,8 +118,10 @@ function checkAnswer() {
     const correctAnswer = quizzes[quizIndex].answer;
     const userAnswer = document.getElementById("answerInput").value;
     const resultElement = document.getElementById("result");
-
     if (userAnswer === correctAnswer) {
+        // ★★★★★★★★★★★★★★★★★★★★
+        // ここが今回の修正箇所です
+        // ★★★★★★★★★★★★★★★★★★★★
         resultElement.innerHTML = `封印解除...！<br>賢人の記録を入手した。<br>新たな物語が解放された。<br><span class="keyword">${quizzes[quizIndex].keyword}</span>`;
         
         const currentSolvedCount = getSolvedCount();
@@ -159,7 +154,6 @@ function showSolvedState(quizData) {
     const answerInput = document.getElementById("answerInput");
     const submitButton = document.querySelector("button");
     const resultElement = document.getElementById("result");
-
     answerInput.style.display = "none";
     submitButton.style.display = "none";
     resultElement.innerHTML = `記録解放済み：<br><span class="keyword">${quizData.keyword}</span>`;
@@ -184,7 +178,6 @@ function displaySummary() {
         summaryItem.innerHTML = contentHTML;
         summaryContainer.appendChild(summaryItem);
     });
-
     if (solvedCount >= quizzes.length) {
         const finalMessage = document.createElement("div");
         finalMessage.classList.add("final-message");
