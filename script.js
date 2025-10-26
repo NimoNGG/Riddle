@@ -237,7 +237,7 @@ function displaySummary() {
     if (solvedCount >= quizzes.length) {
         const finalMessage = document.createElement("div");
         finalMessage.classList.add("final-message");
-        finalMessage.innerText = "この遺言をもとに<br>失われた天秤を<br>探しに行こう";
+        finalMessage.innerHTML = "この遺言をもとに<br>失われた天秤を<br>探しに行こう";
         summaryContainer.parentNode.appendChild(finalMessage);
     }
 }
@@ -253,6 +253,7 @@ function checkFinalKeyword() {
         resultElement.style.color = "red";
     }
 }
+
 
 
 
