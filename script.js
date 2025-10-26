@@ -30,7 +30,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("scenario-title")) { initScenarioViewerPage(); }
     if (document.getElementById("quizTitle")) { setupQuiz(); }
     if (document.getElementById("summary-list")) { displaySummary(); }
-    if (document.getElementById("finalAnswerInput")) { /* final_keyword.html用の処理 */ }
 });
 
 function initIndexPage() {
@@ -70,15 +69,23 @@ function initScenarioListPage() {
         const link = document.createElement("a");
         link.innerText = scenario.title;
         let isUnlocked = false;
+
+        // 終章のアンロック条件
         if (index === scenarios.length - 1) {
             if (solvedCount >= quizzes.length) {
                 isUnlocked = true;
-                link.href = `final_keyword.html`;
+                if (localStorage.getItem('finalChapterUnlocked') === 'true') {
+                    link.href = `scenario_viewer.html?id=${index}`;
+                } else {
+                    link.href = `final_keyword.html`;
+                }
             }
+        // それ以外の章のアンロック条件
         } else if (index <= solvedCount) {
             isUnlocked = true;
             link.href = `scenario_viewer.html?id=${index}`;
         }
+
         if (isUnlocked) {
             scenarioContainer.appendChild(link);
         } else {
@@ -96,12 +103,46 @@ function initScenarioViewerPage() {
     if (scenarioData) {
         document.getElementById("scenario-title").innerText = scenarioData.title;
         document.getElementById("scenario-text").innerHTML = `<p>${scenarioData.text.replace(/\n/g, '<br><br>')}</p>`;
+
+        if (scenarioId === scenarios.length - 1) {
+            const treasureElement = document.getElementById("final-treasure");
+            if (treasureElement) {
+                treasureElement.classList.remove("hidden");
+            }
+            const backButton = document.querySelector(".back-button");
+            if (backButton) {
+                backButton.innerText = "メインメニューに戻る";
+                backButton.href = "index.html";
+            }
+        }
     }
 }
 
 // =============================================
 // ゲームの進行管理
 // =============================================
+function initScenarioViewerPage() {
+    const params = new URLSearchParams(window.location.search);
+    const scenarioId = parseInt(params.get("id"));
+    const scenarioData = scenarios[scenarioId];
+    if (scenarioData) {
+        document.getElementById("scenario-title").innerText = scenarioData.title;
+        document.getElementById("scenario-text").innerHTML = `<p>${scenarioData.text.replace(/\n/g, '<br><br>')}</p>`;
+
+        if (scenarioId === scenarios.length - 1) {
+            const treasureElement = document.getElementById("final-treasure");
+            if (treasureElement) {
+                treasureElement.classList.remove("hidden");
+            }
+            const backButton = document.querySelector(".back-button");
+            if (backButton) {
+                backButton.innerText = "メインメニューに戻る";
+                backButton.href = "index.html";
+            }
+        }
+    }
+}
+
 function getSolvedCount() {
     const count = localStorage.getItem('solvedQuizCount');
     return count ? parseInt(count) : 0;
@@ -123,7 +164,7 @@ function checkAnswer() {
         const currentSolvedCount = getSolvedCount();
         let resultMessage = `封印解除！<br>賢人の記録を入手した。<br>`;
         if (quizId > currentSolvedCount) {
-            resultMessage += `また新たな物語と記録が解放された。<br>`;
+            resultMessage += `また新たな物語とシナリオが解放された。<br>`;
             setSolvedCount(quizId);
         }
         resultMessage += `<span class="keyword">${quizzes[quizIndex].keyword}</span>`;
@@ -156,18 +197,15 @@ function showSolvedState(quizData) {
     const answerInput = document.getElementById("answerInput");
     const submitButton = document.querySelector("button");
     const resultElement = document.getElementById("result");
+
     answerInput.style.display = "none";
     submitButton.style.display = "none";
     
-    // ページを再読み込みした場合は、正解時のメッセージではなく、シンプルな「解放済み」メッセージを表示
-    if (resultElement.innerHTML.includes('封印解除')) {
-        // 正解直後なので何もしない
-    } else {
+    if (!resultElement.innerHTML.includes('封印解除')) {
         resultElement.innerHTML = `記録解放済み：<br><span class="keyword">${quizData.keyword}</span>`;
     }
     resultElement.style.color = "#4a3d2b";
 }
-
 
 function displaySummary() {
     const summaryContainer = document.getElementById("summary-list");
@@ -178,15 +216,12 @@ function displaySummary() {
         const summaryItem = document.createElement("div");
         summaryItem.classList.add("summary-item");
         let contentHTML;
-        // ★★★ ここが今回の修正箇所です ★★★
         const titleParts = ["第一の賢人の記録", "第二の賢人の記録", "第三の賢人の記録", "第四の賢人の記録", "第五の賢人の記録", "第六の賢人の記録"];
         
         if (index < solvedCount) {
             summaryItem.classList.add("solved");
-            // `<h3>`には賢人の記録タイトルを、`<p>`にはキーワード本文を表示
             contentHTML = `<h3>${titleParts[index]}</h3><p>${quiz.keyword}</p>`;
         } else {
-            // 未解答の場合は、謎のタイトルを表示
             contentHTML = `<h3>${quiz.title}</h3><p>--- LOCKED ---</p>`;
         }
         summaryItem.innerHTML = contentHTML;
@@ -204,13 +239,10 @@ function checkFinalKeyword() {
     const userAnswer = document.getElementById("finalAnswerInput").value;
     const resultElement = document.getElementById("result");
     if (userAnswer === FINAL_KEYWORD) {
+        localStorage.setItem('finalChapterUnlocked', 'true');
         window.location.href = `scenario_viewer.html?id=${scenarios.length - 1}`;
     } else {
         resultElement.textContent = "言葉が違う…天秤はまだ君を認めていない。";
         resultElement.style.color = "red";
     }
 }
-
-
-
-
