@@ -39,10 +39,9 @@ h2 { font-size: 1.8em; }
 /* index.html のスタイル */
 /* ============================================= */
 .main-menu-container {
-    margin-bottom: 30px;
-    border-top: 2px solid #c8bca9;
-    border-bottom: 2px solid #c8bca9;
-    padding: 15px 0;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding: 0;
 }
 .main-menu-button {
     display: block;
@@ -351,3 +350,4 @@ button:hover {
     .quiz-selection { grid-template-columns: 1fr; }
     #answerInput { width: 90%; }
 }
+
