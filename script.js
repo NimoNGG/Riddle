@@ -164,7 +164,7 @@ function checkAnswer() {
         const currentSolvedCount = getSolvedCount();
         let resultMessage = `封印解除！<br>賢人の記録を入手した。<br>`;
         if (quizId > currentSolvedCount) {
-            resultMessage += `また新たな物語とシナリオが解放された。<br>`;
+            resultMessage += `また新たな物語とシナリオが<br>解放された。<br>`;
             setSolvedCount(quizId);
         }
         resultMessage += `<span class="keyword">${quizzes[quizIndex].keyword}</span>`;
@@ -246,3 +246,4 @@ function checkFinalKeyword() {
         resultElement.style.color = "red";
     }
 }
+
