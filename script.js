@@ -161,23 +161,30 @@ function checkAnswer() {
     const resultElement = document.getElementById("result");
 
     if (userAnswer === correctAnswer) {
-        const currentSolvedCount = getSolvedCount();
         let resultMessage = `封印解除！<br>賢人の遺言を入手した。<br>`;
+        const currentSolvedCount = getSolvedCount();
+        
         if (quizId > currentSolvedCount) {
-            resultMessage += `また新たなシナリオとエニグマが<br>解放された。<br>`;
+            // ★★★ ここが今回の修正箇所です ★★★
+            if (quizId < quizzes.length) {
+                // 第1〜5の記録の場合
+                resultMessage += `また新たなシナリオとエニグマが<br>解放された。<br>`;
+            } else {
+                // 第6の記録の場合
+                resultMessage += `また新たなシナリオが解放された。<br>`;
+            }
             setSolvedCount(quizId);
         }
+        
         resultMessage += `<span class="keyword">${quizzes[quizIndex].keyword}</span>`;
         resultElement.innerHTML = resultMessage;
         
         showSolvedState(quizzes[quizIndex]);
-
     } else {
         resultElement.textContent = "合言葉が違うようだ…";
         resultElement.style.color = "red";
     }
 }
-
 function setupQuiz() {
     const params = new URLSearchParams(window.location.search);
     const quizId = parseInt(params.get("q"));
@@ -246,6 +253,7 @@ function checkFinalKeyword() {
         resultElement.style.color = "red";
     }
 }
+
 
 
 
