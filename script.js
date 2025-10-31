@@ -177,6 +177,11 @@ function checkAnswer() {
         }
         
         resultMessage += `<span class="keyword">${quizzes[quizIndex].keyword}</span>`;
+        
+        // ↓↓↓ ここから追加 ↓↓↓
+        resultMessage += `<p class="next-step-message">シナリオを確認し、<br>次なるエニグマを解き明かせ</p>`;
+        // ↑↑↑ ここまで追加 ↑↑↑
+
         resultElement.innerHTML = resultMessage;
         
         showSolvedState(quizzes[quizIndex]);
@@ -209,7 +214,13 @@ function showSolvedState(quizData) {
     submitButton.style.display = "none";
     
     if (!resultElement.innerHTML.includes('封印解除')) {
-        resultElement.innerHTML = `遺言解放済み：<br><span class="keyword">${quizData.keyword}</span>`;
+        let solvedMessage = `遺言解放済み：<br><span class="keyword">${quizData.keyword}</span>`;
+        
+        // ↓↓↓ ここから追加 ↓↓↓
+        solvedMessage += `<p class="next-step-message">シナリオを確認し、<br>次なるエニグマを解き明かせ</p>`;
+        // ↑↑↑ ここまで追加 ↑↑↑
+        
+        resultElement.innerHTML = solvedMessage;
     }
     resultElement.style.color = "#4a3d2b";
 }
@@ -253,6 +264,7 @@ function checkFinalKeyword() {
         resultElement.style.color = "red";
     }
 }
+
 
 
 
