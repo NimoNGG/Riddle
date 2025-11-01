@@ -149,6 +149,16 @@ button:hover {
     margin-top: 10px;
     animation: fadeIn 1s ease-out;
 }
+/* ↓↓↓ ここを修正しました ↓↓↓ */
+.next-step-message {
+    font-size: 1em;
+    color: #4a3d2b; 
+    border-top: 1px dotted #c8bca9;
+    padding-top: 15px;
+    margin-top: 20px;
+    /* font-weight: normal; */ /* ← この行を削除、またはコメントアウト */
+}
+/* ↑↑↑ ここまで ↑↑↑ */
 .back-link-container {
     margin-top: 40px;
     text-align: center;
@@ -260,6 +270,17 @@ button:hover {
     70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(255, 190, 50, 0); }
     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 190, 50, 0); }
 }
+
+/* ★★★ ここからが光るボタンのスタイルです ★★★ */
+.pulsing-button {
+    /* 既存の @keyframes halo-pulse を流用 */
+    animation: halo-pulse 2.5s infinite ease-in-out;
+    
+    /* 元のボタンの影も保持 (これが無いとアニメーションの影だけになる) */
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+}
+/* ★★★ ここまで ★★★ */
+
 
 /* ============================================= */
 /* スマートフォン用のレスポンシブデザイン */
