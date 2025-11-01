@@ -32,11 +32,15 @@ document.addEventListener("DOMContentLoaded", () => {
     if (document.getElementById("summary-list")) { displaySummary(); }
 });
 
+// ★★★ ここを修正 (initIndexPage) ★★★
+// 光るボタンの対象を変更
 function initIndexPage() {
     const quizContainer = document.getElementById("quiz-selection");
     if (!quizContainer) return;
     const solvedCount = getSolvedCount();
     quizContainer.innerHTML = '';
+    
+    // エニグマ一覧
     quizzes.forEach((quiz, index) => {
         const link = document.createElement("a");
         link.innerText = quiz.title;
@@ -48,11 +52,43 @@ function initIndexPage() {
         }
         quizContainer.appendChild(link);
     });
+
+    // 「失われた天秤を探す」(summary.htmlへのリンク)
     const summaryLink = document.createElement("a");
     summaryLink.href = "summary.html";
     summaryLink.className = "summary-link";
-    summaryLink.innerText = "遺言を一覧で見る";
+    summaryLink.innerText = "失われた天秤を探す"; 
+
+    if (solvedCount >= quizzes.length) {
+        summaryLink.style.backgroundColor = "#8a0303"; 
+        
+        // ★ 修正 1: 光る条件の変更
+        // 最後の合言葉がアンロックされていない場合のみ光らせる
+        if (localStorage.getItem('finalChapterUnlocked') !== 'true') {
+            summaryLink.classList.add("pulsing-button");
+        }
+
+    } else {
+        summaryLink.classList.add("locked"); 
+        summaryLink.onclick = (e) => e.preventDefault();
+    }
     quizContainer.appendChild(summaryLink);
+
+    // 「最後の合言葉を入力する」ボタン (マップの *前* に移動)
+    if (solvedCount >= quizzes.length) {
+        const finalKeywordLink = document.createElement("a");
+        finalKeywordLink.href = "final_keyword.html";
+        finalKeywordLink.className = "map-link"; // ベーススタイル
+        
+        // ★ 修正 2: こちらのボタンからは pulsing-button クラスを削除
+        // finalKeywordLink.classList.add("pulsing-button"); // ← 削除
+        
+        finalKeywordLink.innerText = "最後の合言葉を入力する";
+        finalKeywordLink.style.backgroundColor = "#6d5b43"; // 元のスタイル指定
+        quizContainer.appendChild(finalKeywordLink);
+    }
+
+    // 「探索マップを確認する」 (順番が最後になる)
     const mapLink = document.createElement("a");
     mapLink.href = "map.html";
     mapLink.className = "map-link";
@@ -60,27 +96,27 @@ function initIndexPage() {
     quizContainer.appendChild(mapLink);
 }
 
+// scenario.html (シナリオ一覧) のアンロック条件を変更
 function initScenarioListPage() {
     const scenarioContainer = document.getElementById("scenario-selection");
     if (!scenarioContainer) return;
     const solvedCount = getSolvedCount();
     scenarioContainer.innerHTML = '';
+    
     scenarios.forEach((scenario, index) => {
         const link = document.createElement("a");
         link.innerText = scenario.title;
         let isUnlocked = false;
 
-        // 終章のアンロック条件
+        // 終章のアンロック条件を変更
         if (index === scenarios.length - 1) {
-            if (solvedCount >= quizzes.length) {
+            // 'finalChapterUnlocked' が true の場合のみアンロック
+            if (localStorage.getItem('finalChapterUnlocked') === 'true') {
                 isUnlocked = true;
-                if (localStorage.getItem('finalChapterUnlocked') === 'true') {
-                    link.href = `scenario_viewer.html?id=${index}`;
-                } else {
-                    link.href = `final_keyword.html`;
-                }
+                link.href = `scenario_viewer.html?id=${index}`;
             }
-        // それ以外の章のアンロック条件
+        
+        // それ以外の章のアンロック条件 (変更なし)
         } else if (index <= solvedCount) {
             isUnlocked = true;
             link.href = `scenario_viewer.html?id=${index}`;
@@ -96,6 +132,7 @@ function initScenarioListPage() {
     });
 }
 
+// (この関数は元のファイルに2重定義されていましたが、片方をそのまま残します)
 function initScenarioViewerPage() {
     const params = new URLSearchParams(window.location.search);
     const scenarioId = parseInt(params.get("id"));
@@ -121,6 +158,9 @@ function initScenarioViewerPage() {
 // =============================================
 // ゲームの進行管理
 // =============================================
+
+// (この関数は元のファイルに2重定義されていましたが、片方をそのまま残します)
+// ※ initScenarioViewerPage が2重定義されているのは元のファイルからです。
 function initScenarioViewerPage() {
     const params = new URLSearchParams(window.location.search);
     const scenarioId = parseInt(params.get("id"));
@@ -152,6 +192,7 @@ function setSolvedCount(count) {
     localStorage.setItem('solvedQuizCount', count);
 }
 
+// 正解時のメッセージを変更
 function checkAnswer() {
     const params = new URLSearchParams(window.location.search);
     const quizId = parseInt(params.get("q"));
@@ -165,12 +206,9 @@ function checkAnswer() {
         const currentSolvedCount = getSolvedCount();
         
         if (quizId > currentSolvedCount) {
-            // ★★★ ここが今回の修正箇所です ★★★
             if (quizId < quizzes.length) {
-                // 第1〜5の記録の場合
                 resultMessage += `また新たなシナリオとエニグマが<br>解放された。<br>`;
             } else {
-                // 第6の記録の場合
                 resultMessage += `また新たなシナリオが解放された。<br>`;
             }
             setSolvedCount(quizId);
@@ -178,21 +216,26 @@ function checkAnswer() {
         
         resultMessage += `<span class="keyword">${quizzes[quizIndex].keyword}</span>`;
         
-        // ↓↓↓ ここから追加 ↓↓↓
-        resultMessage += `<p class="next-step-message">シナリオを確認し、<br>次なるエニグマを解き明かせ</p>`;
-        // ↑↑↑ ここまで追加 ↑↑↑
+        // 第6問の時だけメッセージを変更
+        if (quizId === quizzes.length) {
+             resultMessage += `<p class="next-step-message">シナリオを確認し、<br>失われた天秤を探し出そう！</p>`;
+        } else {
+             resultMessage += `<p class="next-step-message">シナリオを確認し、<br>次なるエニグマを解き明かせ</p>`;
+        }
 
         resultElement.innerHTML = resultMessage;
         
-        showSolvedState(quizzes[quizIndex]);
+        showSolvedState(quizzes[quizIndex], quizId); // quizId を渡すよう変更
     } else {
         resultElement.textContent = "合言葉が違うようだ…";
         resultElement.style.color = "red";
     }
 }
+
+// showSolvedState に quizId を渡すよう変更
 function setupQuiz() {
     const params = new URLSearchParams(window.location.search);
-    const quizId = parseInt(params.get("q"));
+    const quizId = parseInt(params.get("q")); // quizId を取得
     const quizIndex = quizId - 1;
     const quizData = quizzes[quizIndex];
     if (quizData) {
@@ -200,12 +243,13 @@ function setupQuiz() {
         document.getElementById("quizQuestion").innerHTML = quizData.question;
         const solvedCount = getSolvedCount();
         if (quizId <= solvedCount) {
-            showSolvedState(quizData);
+            showSolvedState(quizData, quizId); // quizId を渡す
         }
     }
 }
 
-function showSolvedState(quizData) {
+// 解答済みの場合のメッセージを変更
+function showSolvedState(quizData, quizId) { // quizId を受け取る
     const answerInput = document.getElementById("answerInput");
     const submitButton = document.querySelector("button");
     const resultElement = document.getElementById("result");
@@ -216,19 +260,33 @@ function showSolvedState(quizData) {
     if (!resultElement.innerHTML.includes('封印解除')) {
         let solvedMessage = `遺言解放済み：<br><span class="keyword">${quizData.keyword}</span>`;
         
-        // ↓↓↓ ここから追加 ↓↓↓
-        solvedMessage += `<p class="next-step-message">シナリオを確認し、<br>次なるエニグマを解き明かせ</p>`;
-        // ↑↑↑ ここまで追加 ↑↑↑
+        // 第6問の時だけメッセージを変更
+        if (quizId === quizzes.length) { // quizId で判定
+             solvedMessage += `<p class="next-step-message">シナリオを確認し、<br>失われた天秤を探し出そう！</p>`;
+        } else {
+             solvedMessage += `<p class="next-step-message">シナリオを確認し、<br>次なるエニグマを解き明かせ</p>`;
+        }
         
         resultElement.innerHTML = solvedMessage;
     }
     resultElement.style.color = "#4a3d2b";
 }
 
+// summary.html (一覧ページ) のレイアウトを変更
 function displaySummary() {
     const summaryContainer = document.getElementById("summary-list");
     if (!summaryContainer) return;
     const solvedCount = getSolvedCount();
+
+    // 最終メッセージをコンテナの *前* に移動
+    if (solvedCount >= quizzes.length) {
+        const finalMessage = document.createElement("div");
+        finalMessage.classList.add("final-message");
+        finalMessage.innerHTML = "この遺言をもとに<br>失われた天秤を<br>探しに行こう";
+        // summaryContainer (id="summary-list") の *前* に挿入
+        summaryContainer.parentNode.insertBefore(finalMessage, summaryContainer);
+    }
+
     summaryContainer.innerHTML = '';
     quizzes.forEach((quiz, index) => {
         const summaryItem = document.createElement("div");
@@ -245,37 +303,31 @@ function displaySummary() {
         summaryItem.innerHTML = contentHTML;
         summaryContainer.appendChild(summaryItem);
     });
-    if (solvedCount >= quizzes.length) {
-        const finalMessage = document.createElement("div");
-        finalMessage.classList.add("final-message");
-        finalMessage.innerHTML = "この遺言をもとに<br>失われた天秤を<br>探しに行こう";
-        summaryContainer.parentNode.appendChild(finalMessage);
-    }
 }
 
+// final_keyword.html (最後の合言葉) の正解時動作を変更
 function checkFinalKeyword() {
     const userAnswer = document.getElementById("finalAnswerInput").value;
     const resultElement = document.getElementById("result");
+    
     if (userAnswer === FINAL_KEYWORD) {
         localStorage.setItem('finalChapterUnlocked', 'true');
-        window.location.href = `scenario_viewer.html?id=${scenarios.length - 1}`;
+        
+        // メッセージを表示し、遅延してページ遷移
+        resultElement.innerHTML = "終章のシナリオがアンロックされた！";
+        resultElement.style.color = "#4a3d2b"; // 正解の色
+        
+        // ボタンと入力を非表示にする
+        document.getElementById("finalAnswerInput").style.display = 'none';
+        document.querySelector("button").style.display = 'none';
+
+        // 2秒後にシナリオページへ遷移
+        setTimeout(() => {
+            window.location.href = `scenario_viewer.html?id=${scenarios.length - 1}`;
+        }, 2000); 
+
     } else {
         resultElement.textContent = "合言葉が違う…天秤はまだ君を認めていない。";
         resultElement.style.color = "red";
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
