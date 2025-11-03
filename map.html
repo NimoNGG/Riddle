@@ -14,14 +14,26 @@
     <div class="container">
         <h2>探索マップ</h2>
         
-        <div class="map-image-container">
-            <img src="map.jpg" alt="探索マップ" class="map-image">
+        <div id="map-category-selection" class="map-category-container">
+            <button class="map-category-button" data-category="forest">Forest Gateway</button>
+            <button class="map-category-button" data-category="building3">3号館</button>
+            <button class="map-category-button" data-category="outdoor">室外</button>
+        </div>
+
+        <div id="map-viewer-container" class="map-viewer-container hidden">
+            <h3 id="map-title"></h3>
+            
+            <div id="map-display-area" class="map-display-area">
+                </div>
+            
+            <button id="map-back-to-category" class="pagination-button back-to-category">マップ選択に戻る</button>
         </div>
 
         <div class="back-button-container">
             <a href="index.html" class="back-button">ページを戻る</a>
         </div>
     </div>
-
+    
+    <script src="script.js"></script>
 </body>
 </html>
