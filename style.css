@@ -149,27 +149,20 @@ button:hover {
     margin-top: 10px;
     animation: fadeIn 1s ease-out;
 }
-
-/* ▼▼▼ .next-step-message を修正 ▼▼▼ */
 .next-step-message {
     font-size: 1em;
-    color: #8a0303; /* 赤色に変更 */
-    font-weight: bold; /* 太字に変更 */
+    color: #8a0303; /* 強調表示（赤太字） */
+    font-weight: bold;
     border-top: 1px dotted #c8bca9;
     padding-top: 15px;
     margin-top: 20px;
 }
-/* ▲▲▲ ここまで ▲▲▲ */
-
-/* ▼▼▼ .quiz1-warning を追加 ▼▼▼ */
 .quiz1-warning {
     font-size: 1em;
     color: #8a0303;
     font-weight: bold;
     margin-top: 15px;
 }
-/* ▲▲▲ ここまで ▲▲▲ */
-
 .back-link-container {
     margin-top: 40px;
     text-align: center;
@@ -183,8 +176,109 @@ button:hover {
 /* ============================================= */
 /* map.html のスタイル */
 /* ============================================= */
-.map-image-container { margin-top: 20px; }
-.map-image { max-width: 100%; height: auto; border: 2px solid #c8bca9; }
+
+/* ▼▼▼ ここから map.html 用の新スタイル (修正版) ▼▼▼ */
+
+/* map.html の カテゴリボタンのコンテナ */
+.map-category-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin: 20px 0;
+}
+.map-category-container.hidden {
+    display: none;
+}
+/* カテゴリボタン（通常ボタンのデザインを流用） */
+.map-category-button {
+    padding: 15px;
+    background-color: #4a3d2b;
+    color: #f5eeda;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 3px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    transition: all 0.2s ease;
+    border: none;
+    font-family: 'EB Garamond', serif;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+.map-category-button:hover {
+    background-color: #3a3022;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+}
+
+/* マップ画像ビューアコンテナ */
+.map-viewer-container {
+    margin-top: 20px;
+    width: 100%;
+}
+.map-viewer-container.hidden {
+    display: none;
+}
+.map-viewer-container h3 {
+    font-size: 1.5em;
+    margin: 0 0 15px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #c8bca9;
+    color: #6d5b43;
+}
+
+/* マップ画像表示領域 */
+.map-display-area {
+    width: 100%;
+    max-height: 60vh; /* 高すぎると戻るボタンが押せないため、最大高さを設定 */
+    overflow-y: auto; /* 縦スクロールを有効にする */
+    border: 2px solid #c8bca9;
+    background: #eee;
+    margin-bottom: 15px;
+    padding: 10px; /* 内側に少し余白 */
+    box-sizing: border-box; /* paddingを含めて高さを計算 */
+}
+/* 表示される画像 */
+.map-display-area img {
+    max-width: 100%; /* コンテナ幅に合わせる */
+    height: auto;
+    display: block;
+    margin-bottom: 10px; /* 画像間の余白 */
+    border: 1px solid #c8bca9; /* 画像にも枠線 */
+}
+.map-display-area img:last-child {
+    margin-bottom: 0;
+}
+
+/* ページネーション (次へ/前へボタンは削除) */
+.pdf-pagination {
+    display: none; /* ページネーション全体を非表示 */
+}
+
+/* ページネーションボタン (赤ボタンのデザインを流用) */
+.pagination-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-family: 'EB Garamond', serif;
+    background-color: #8a0303;
+    color: #f5eeda;
+    border: 2px solid #6b0202;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    transition: all 0.2s ease;
+}
+/* 「カテゴリに戻る」ボタン */
+.back-to-category {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #4a3d2b; /* 通常の戻るボタンと同じ色 */
+    border-color: #3a3022;
+}
+.back-to-category:hover {
+    background-color: #3a3022;
+}
+/* ▲▲▲ map.html 用スタイルここまで ▲▲▲ */
+
 .back-button-container { margin-top: 30px; }
 .back-button {
     display: inline-block; padding: 12px 25px; font-size: 1.1em; font-family: 'EB Garamond', serif;
@@ -406,4 +500,12 @@ button:hover {
     .question, .collapsible-content p, .scenario-text p { font-size: 1.1em; }
     .quiz-selection { grid-template-columns: 1fr; }
     #answerInput, #finalAnswerInput { width: 90%; }
+    
+    /* マップ画像の表示高さをスマホに合わせる */
+    .map-display-area {
+        height: 60vh; 
+    }
+    .pagination-button {
+        padding: 8px 15px; /* ボタンを少し小さく */
+    }
 }
