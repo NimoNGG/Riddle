@@ -490,6 +490,13 @@ button:hover {
     color: #8a0303; /* キーワードやボタンと同じ赤色 */
 }
 
+.question-highlight {
+    font-weight: bold;      /* 太字にする */
+    color: #8a0303;         /* 目立つ赤色 */
+    background-color: #fffacd; /* 薄い黄色の背景 */
+    padding: 2px 5px;      /* 少し余白をつける */
+    border-radius: 3px;    /* 角を丸くする */
+}
 
 /* ============================================= */
 /* スマートフォン用のレスポンシブデザイン */
@@ -509,3 +516,4 @@ button:hover {
         padding: 8px 15px; /* ボタンを少し小さく */
     }
 }
+
