@@ -149,16 +149,27 @@ button:hover {
     margin-top: 10px;
     animation: fadeIn 1s ease-out;
 }
-/* ↓↓↓ ここを修正しました ↓↓↓ */
+
+/* ▼▼▼ .next-step-message を修正 ▼▼▼ */
 .next-step-message {
     font-size: 1em;
-    color: #4a3d2b; 
+    color: #8a0303; /* 赤色に変更 */
+    font-weight: bold; /* 太字に変更 */
     border-top: 1px dotted #c8bca9;
     padding-top: 15px;
     margin-top: 20px;
-    /* font-weight: normal; */ /* ← この行を削除、またはコメントアウト */
 }
-/* ↑↑↑ ここまで ↑↑↑ */
+/* ▲▲▲ ここまで ▲▲▲ */
+
+/* ▼▼▼ .quiz1-warning を追加 ▼▼▼ */
+.quiz1-warning {
+    font-size: 1em;
+    color: #8a0303;
+    font-weight: bold;
+    margin-top: 15px;
+}
+/* ▲▲▲ ここまで ▲▲▲ */
+
 .back-link-container {
     margin-top: 40px;
     text-align: center;
@@ -280,6 +291,110 @@ button:hover {
     box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
 }
 /* ★★★ ここまで ★★★ */
+
+
+/* ============================================= */
+/* ★★★ index.html のアコーディオン用スタイル ★★★ */
+/* ============================================= */
+
+/* アコーディオンのトリガーボタン */
+.accordion-trigger {
+    width: 100%; 
+    cursor: pointer;
+    
+    /* デザインを「枠線ボタン」に変更 */
+    background-color: transparent; 
+    color: #4a3d2b; 
+    border: 2px solid #6d5b43; 
+    box-shadow: none; 
+}
+
+/* ホバー時のスタイルも変更 */
+.main-menu-button.accordion-trigger:hover {
+    background-color: rgba(0,0,0,0.05); 
+    transform: none; 
+    box-shadow: none;
+}
+
+/* ボタン内のテキストと矢印をグループ化するラッパー */
+.accordion-content-wrapper {
+    display: inline-block; 
+    vertical-align: middle;
+}
+
+/* 矢印のスタイル */
+.accordion-arrow {
+    font-size: 0.8em; 
+    margin-left: 10px; 
+    transition: transform 0.3s ease-out; 
+    display: inline-block;
+}
+
+/* activeになったボタン（開いた時）の見た目を少し変える（任意）*/
+.accordion-trigger.active {
+    background-color: rgba(0,0,0,0.05); 
+    color: #4a3d2b;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-color: transparent; 
+}
+
+/* 開いた時の矢印の回転 */
+.accordion-trigger.active .accordion-arrow {
+    transform: rotate(90deg); /* 90度回転させて下向きにする */
+}
+
+
+/* アコーディオンで開閉するパネル */
+.accordion-panel {
+    max-height: 0; 
+    overflow: hidden; 
+    transition: max-height 0.3s ease-out;
+    background-color: rgba(0,0,0,0.03); 
+    border-radius: 3px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    /* ボタンの枠線と繋がるように調整 */
+    border: 2px solid #6d5b43;
+    border-top: none; 
+    margin-top: -2px; 
+}
+
+/* how_to_play.html から持ってきた専用スタイル */
+.how-to-play-container {
+    text-align: left;
+    margin-top: 0; 
+    padding: 20px 15px 5px 15px; 
+}
+.step {
+    background-color: rgba(0,0,0,0.05);
+    border: 1px solid #dcd3c2;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 3px;
+}
+.step:last-child {
+    margin-bottom: 10px; 
+}
+.step h3 {
+    font-size: 1.5em;
+    margin: 0 0 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #c8bca9;
+    color: #6d5b43;
+}
+.step p {
+    font-size: 1.2em;
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* 強調文字のスタイル */
+.step .highlight {
+    font-weight: bold;
+    color: #8a0303; /* キーワードやボタンと同じ赤色 */
+}
 
 
 /* ============================================= */
